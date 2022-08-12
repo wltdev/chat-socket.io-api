@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
+  },
   "scripts": {
     "build": "ttsc -p tsconfig.json",
     "start": "tsnd --transpile-only --respawn --ignore-watch node_module src/server.ts",
