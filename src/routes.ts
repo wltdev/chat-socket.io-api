@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { createGroupController } from './useCases/CreateGroup'
 import { createUserContoller } from './useCases/CreateUser'
 import { getUserContoller } from './useCases/GetUser'
 import { getUsersListContoller } from './useCases/GetUsersList'
 import { updateUserContoller } from './useCases/UpdateUser'
+import { singinController } from './useCases/Signin'
 
 const router = Router()
 
@@ -23,8 +23,8 @@ router.put('/users/:id', (request, response) => {
   return updateUserContoller.handle(request, response)
 })
 
-router.post('/groups', (request, response) => {
-  return createGroupController.handle(request, response)
+router.post('/signin', (request, response) => {
+  return singinController.handle(request, response)
 })
 
 export { router }
