@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for useCases/Signin/SigninUseCase.ts</title>
+    <title>Code coverage report for useCases/Signup/SignupUseCase.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">useCases/Signin</a> SigninUseCase.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">useCases/Signup</a> SignupUseCase.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
@@ -112,15 +112,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -136,36 +136,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 &nbsp;
+import { User } from '@/entities/User'
 import { IUsersRepository } from '@/repositories/IUsersRespository'
-import { ISigninDTO } from './SigninDTO'
-&nbsp;
+import { ISignupRequestDTO } from './SignupDTO'
 import { appConfig } from '@/config'
 &nbsp;
-export class SigninUseCase {
+export class SignupUseCase {
   constructor(
     private usersRepository: IUsersRepository
   ) {}
 &nbsp;
-  async execute(data: ISigninDTO) {
-    const user = await this.usersRepository.findByEmail(data.email)
+  async execute(data: ISignupRequestDTO) {
+    const userAlreadyExists = await this.usersRepository.findByEmail(data.email)
 &nbsp;
-    if (!user) {
-      throw new Error('User not found')
+    if (userAlreadyExists) {
+      throw new Error('User already exists')
     }
 &nbsp;
-    const match = await bcrypt.compare(data.password, user.password)
+    data.password = bcrypt.hashSync(data.password, 10)
 &nbsp;
-    if (!match) {
-      throw new Error('Invalid password')
-    }
+    const user = new User(data)
+&nbsp;
+    const doc = await this.usersRepository.save(user)
 &nbsp;
     const token = jwt.sign({ id: user.id }, String(appConfig.secrets.jwt), {
       expiresIn: appConfig.secrets.jwtExp
     })
 &nbsp;
-    delete user.password
+    delete doc.password
 &nbsp;
-    return { user, token }
+    return { user: doc, token }
   }
 }
 &nbsp;</pre></td></tr></table></pre>

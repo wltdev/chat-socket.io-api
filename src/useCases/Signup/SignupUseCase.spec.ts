@@ -1,14 +1,14 @@
 import { PostgresUsersRepository } from '@/repositories/implementations/PostgresUsersRepository'
-import { CreateUserUseCase } from './CreateUserUseCase'
+import { SignupUseCase } from './SignupUseCase'
 import { User } from '@/entities/User'
 
 describe('Creating user', () => {
-  let createUserUseCase: CreateUserUseCase
+  let signupUseCase: SignupUseCase
   let datetime: number
 
   beforeAll(() => {
     const postgresUsersRepository = new PostgresUsersRepository()
-    createUserUseCase = new CreateUserUseCase(
+    signupUseCase = new SignupUseCase(
       postgresUsersRepository
     )
 
@@ -22,9 +22,9 @@ describe('Creating user', () => {
       password: '123456'
     })
 
-    const user = await createUserUseCase.execute(userData)
+    const data = await signupUseCase.execute(userData)
 
-    expect(user).toHaveProperty('id')
+    expect(data).toHaveProperty('token')
   })
 
   it('should not be able to create an existing user', async () => {
@@ -36,7 +36,7 @@ describe('Creating user', () => {
 
     // await createUserUseCase.execute(userData)
 
-    await expect(createUserUseCase.execute(userData)).rejects.toEqual(
+    await expect(signupUseCase.execute(userData)).rejects.toEqual(
       new Error('User already exists')
     )
   })

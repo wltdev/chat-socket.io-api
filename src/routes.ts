@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createUserContoller } from './useCases/CreateUser'
+import { signupContoller } from './useCases/Signup'
 import { getUserContoller } from './useCases/GetUser'
 import { getUsersListContoller } from './useCases/GetUsersList'
 import { updateUserContoller } from './useCases/UpdateUser'
@@ -9,10 +9,6 @@ const router = Router()
 
 router.get('/users', (request, response) => {
   return getUsersListContoller.handle(request, response)
-})
-
-router.post('/users', (request, response) => {
-  return createUserContoller.handle(request, response)
 })
 
 router.get('/users/:id', (request, response) => {
@@ -25,6 +21,10 @@ router.put('/users/:id', (request, response) => {
 
 router.post('/signin', (request, response) => {
   return singinController.handle(request, response)
+})
+
+router.post('/signup', (request, response) => {
+  return signupContoller.handle(request, response)
 })
 
 export { router }

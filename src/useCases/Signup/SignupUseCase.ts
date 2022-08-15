@@ -1,15 +1,17 @@
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 import { User } from '@/entities/User'
 import { IUsersRepository } from '@/repositories/IUsersRespository'
-import { ICreateUserRequestDTO } from './CreateUserDTO'
+import { ISignupRequestDTO } from './SignupDTO'
+import { appConfig } from '@/config'
 
-export class CreateUserUseCase {
+export class SignupUseCase {
   constructor(
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(data: ICreateUserRequestDTO) {
+  async execute(data: ISignupRequestDTO) {
     const userAlreadyExists = await this.usersRepository.findByEmail(data.email)
 
     if (userAlreadyExists) {
@@ -22,6 +24,12 @@ export class CreateUserUseCase {
 
     const doc = await this.usersRepository.save(user)
 
-    return doc
+    const token = jwt.sign({ id: user.id }, String(appConfig.secrets.jwt), {
+      expiresIn: appConfig.secrets.jwtExp
+    })
+
+    delete doc.password
+
+    return { user: doc, token }
   }
 }
