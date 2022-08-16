@@ -1,12 +1,13 @@
 import { PrismaClient } from '@prisma/client'
 import { Message } from '@/entities/Message'
 import { IMessagesRepository } from '../IMessagesRepository'
+import { prisma } from '@/config/prisma'
 
 export class PostgresMessageRespository implements IMessagesRepository {
   private prismaClient: PrismaClient
 
   constructor() {
-    this.prismaClient = new PrismaClient()
+    this.prismaClient = prisma
   }
 
   async save(payload: Message): Promise<Message> {

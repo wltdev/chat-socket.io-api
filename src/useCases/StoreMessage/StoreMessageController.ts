@@ -8,10 +8,10 @@ export class StoreMessageController {
   async handle(request: IUserRequest, response: Response) {
     const { user } = request
     try {
-      const { message, users } = request.body
+      const { message, otherUser } = request.body
       const doc = await this.storeMessageUseCase.execute({
         message,
-        users,
+        users: [otherUser, user.id],
         userId: user.id
       })
 

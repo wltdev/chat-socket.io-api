@@ -5,6 +5,7 @@ import { getUsersListContoller } from './useCases/GetUsersList'
 import { updateUserContoller } from './useCases/UpdateUser'
 import { singinController } from './useCases/Signin'
 import { storeMessageController } from './useCases/StoreMessage'
+import { getMessagesController } from './useCases/GetMessages'
 
 const router = Router()
 
@@ -30,6 +31,10 @@ router.put('/api/users/:id', (request, response) => {
 
 router.post('/api/messages', (request, response) => {
   return storeMessageController.handle(request, response)
+})
+
+router.get('/api/messages', (request, response) => {
+  return getMessagesController.handle(request, response)
 })
 
 export { router }

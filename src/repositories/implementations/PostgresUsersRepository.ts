@@ -1,12 +1,13 @@
 import { PrismaClient } from '@prisma/client'
 import { User } from '@/entities/User'
 import { IUsersRepository } from '../IUsersRespository'
+import { prisma } from '@/config/prisma'
 
 export class PostgresUsersRepository implements IUsersRepository {
   private prismaClient: PrismaClient
 
   constructor() {
-    this.prismaClient = new PrismaClient()
+    this.prismaClient = prisma
   }
 
   async getList (): Promise<User[]> {
