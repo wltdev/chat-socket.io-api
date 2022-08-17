@@ -1,12 +1,13 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { GetUserUseCase } from './GetUserUseCase'
+import { IUserRequest } from '@/middlewares/authMiddleware'
 
 export class GetUserContoller {
   constructor(private getUserUseCase: GetUserUseCase) {}
 
-  async handle(request: Request, response: Response): Promise<Response> {
+  async handle(request: IUserRequest, response: Response): Promise<Response> {
     try {
-      const { id } = request.params
+      const { id } = request.user
       const doc = await this.getUserUseCase.execute(id)
 
       return response.status(201).send(doc)
