@@ -9,6 +9,9 @@ export class GetUserUseCase {
     if (!doc) {
       throw new Error('User not found')
     }
+
+    delete doc.password
+
     return doc
   }
 }
