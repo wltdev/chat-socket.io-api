@@ -31,7 +31,7 @@ export class PostgresMessageRespository implements IMessagesRepository {
         }
       },
       orderBy: {
-        createdAt: 'desc'
+        createdAt: 'asc'
       }
     })
 

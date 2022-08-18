@@ -1,11 +1,15 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 import { GetMessagesUseCase } from './GetMessagesUseCase'
+import { IUserRequest } from '@/middlewares/authMiddleware'
 
 export class GetMessagesController {
   constructor (private getMessageUseCase: GetMessagesUseCase) {}
 
-  async handle (request: Request, response: Response) {
-    const { users } = request.body
+  async handle (request: IUserRequest, response: Response) {
+    const { otherUser } = request.query
+    const { user } = request
+
+    const users = [String(otherUser), user.id]
 
     try {
       const docs = await this.getMessageUseCase.execute({ users })
