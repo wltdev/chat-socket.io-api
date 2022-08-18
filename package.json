@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "nodemailer": "^6.7.5",
+    "socket.io": "^4.5.1",
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
