@@ -32,10 +32,17 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('read-message', (data) => {
+  socket.on('set-message-read', (data) => {
     const sendUserSocket = global.onlineUsers.get(data.otherUser)
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit('message-have-read', { ...data, read: true })
+      socket.to(sendUserSocket).emit('message-read', { ...data, read: true })
+    }
+  })
+
+  socket.on('set-all-messages-read', (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.otherUser)
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('all-messages-read', { ...data })
     }
   })
 })
