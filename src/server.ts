@@ -26,8 +26,16 @@ io.on('connection', (socket) => {
       socket.to(sendUserSocket).emit('message-recieve', {
         id: data.id,
         message: data.message,
+        users: data.users,
         userId: data.userId
       })
+    }
+  })
+
+  socket.on('read-message', (data) => {
+    const sendUserSocket = global.onlineUsers.get(data.otherUser)
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('message-have-read', { ...data, read: true })
     }
   })
 })

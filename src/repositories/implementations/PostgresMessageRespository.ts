@@ -23,6 +23,17 @@ export class PostgresMessageRespository implements IMessagesRepository {
     return doc
   }
 
+  async update(id: string, payload: Message): Promise<Message> {
+    const doc = await this.prismaClient.message.update({
+      where: { id },
+      data: {
+        ...payload
+      }
+    })
+
+    return doc
+  }
+
   async getMessages(users: string[]): Promise<Message[]> {
     const docs = await this.prismaClient.message.findMany({
       where: {
@@ -36,5 +47,18 @@ export class PostgresMessageRespository implements IMessagesRepository {
     })
 
     return docs
+  }
+
+  async setReadMessages(users: string[]): Promise<void> {
+    await this.prismaClient.message.updateMany({
+      where: {
+        users: {
+          hasEvery: users
+        }
+      },
+      data: {
+        read: true
+      }
+    })
   }
 }
