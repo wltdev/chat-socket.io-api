@@ -10,8 +10,22 @@ export class PostgresUsersRepository implements IUsersRepository {
     this.prismaClient = prisma
   }
 
-  async getList (): Promise<User[]> {
-    const docs = await this.prismaClient.user.findMany()
+  async getList (userId: string): Promise<User[]> {
+    const docs = await this.prismaClient.user.findMany({
+      include: {
+        Message: {
+          where: {
+            users: {
+              has: userId
+            }
+          },
+          orderBy: {
+            createdAt: 'desc'
+          },
+          take: 1
+        }
+      }
+    })
     return docs
   }
 

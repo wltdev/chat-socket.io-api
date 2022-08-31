@@ -3,8 +3,8 @@ import { IUsersRepository } from '@/repositories/IUsersRespository'
 export class GetUsersListUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute() {
-    const docs = await this.usersRepository.getList()
+  async execute(userId: string) {
+    const docs = await this.usersRepository.getList(userId)
     return docs
   }
 }
