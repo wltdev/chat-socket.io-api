@@ -5,6 +5,6 @@ export class SetAllMessagesReadUseCase {
   constructor(private messagesRepository: IMessagesRepository) {}
 
   execute (data: ISetAllMessagesReadDTO) {
-    return this.messagesRepository.setReadMessages(data.users)
+    return this.messagesRepository.setReadMessages(data.users, data.userId)
   }
 }

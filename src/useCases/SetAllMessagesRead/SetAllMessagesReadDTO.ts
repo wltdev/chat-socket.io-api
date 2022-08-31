@@ -1,3 +1,4 @@
 export interface ISetAllMessagesReadDTO {
-  users: string[]
+  users: string[],
+  userId: string
 }

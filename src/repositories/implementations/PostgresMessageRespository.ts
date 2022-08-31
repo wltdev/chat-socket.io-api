@@ -49,12 +49,13 @@ export class PostgresMessageRespository implements IMessagesRepository {
     return docs
   }
 
-  async setReadMessages(users: string[]): Promise<void> {
+  async setReadMessages(users: string[], userId: string): Promise<void> {
     await this.prismaClient.message.updateMany({
       where: {
         users: {
           hasEvery: users
-        }
+        },
+        userId
       },
       data: {
         read: true
