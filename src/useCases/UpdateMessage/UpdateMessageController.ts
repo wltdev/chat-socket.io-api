@@ -7,11 +7,11 @@ export class UpdateMessageController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params
-      const { message, users, userId, read } = request.body
+      const { message, receiverId, senderId, read } = request.body
       const doc = await this.updateMessageUseCase.execute(id, {
         message,
-        users,
-        userId,
+        receiverId,
+        senderId,
         read
       })
 

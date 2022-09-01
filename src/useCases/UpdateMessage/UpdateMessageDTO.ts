@@ -1,6 +1,6 @@
 export interface IUpdateMessageDTO {
   message: string
-  users: string[]
-  userId: string
+  receiverId: string
+  senderId: string
   read: boolean
 }

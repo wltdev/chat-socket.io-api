@@ -21,13 +21,14 @@ io.on('connection', (socket) => {
   })
 
   socket.on('send-message', (data) => {
-    const sendUserSocket = global.onlineUsers.get(data.otherUser)
+    const sendUserSocket = global.onlineUsers.get(data.receiverId)
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('message-recieve', {
         id: data.id,
         message: data.message,
         users: data.users,
-        userId: data.userId
+        senderId: data.senderId,
+        receiverId: data.receiverId
       })
     }
   })

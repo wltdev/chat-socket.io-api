@@ -11,7 +11,7 @@ export class SetAllMessagesReadController {
       const { otherUser } = request.body
       const users = [String(otherUser), user.id]
 
-      await this.setAllMessagesReadUseCase.execute({ users, userId: otherUser })
+      await this.setAllMessagesReadUseCase.execute({ users, senderId: otherUser })
 
       return response.status(200).json()
     } catch (error) {

@@ -11,12 +11,12 @@ export class PostgresMessageRespository implements IMessagesRepository {
   }
 
   async save(payload: Message): Promise<Message> {
-    const { message, users, userId } = payload
+    const { message, receiverId, senderId } = payload
     const doc = await this.prismaClient.message.create({
       data: {
         message,
-        users,
-        userId
+        senderId,
+        receiverId
       }
     })
 
@@ -37,8 +37,11 @@ export class PostgresMessageRespository implements IMessagesRepository {
   async getMessages(users: string[]): Promise<Message[]> {
     const docs = await this.prismaClient.message.findMany({
       where: {
-        users: {
-          hasEvery: users
+        senderId: {
+          in: users
+        },
+        receiverId: {
+          in: users
         }
       },
       orderBy: {
@@ -49,13 +52,13 @@ export class PostgresMessageRespository implements IMessagesRepository {
     return docs
   }
 
-  async setReadMessages(users: string[], userId: string): Promise<void> {
+  async setReadMessages(users: string[], senderId: string): Promise<void> {
     await this.prismaClient.message.updateMany({
       where: {
-        users: {
-          hasEvery: users
+        receiverId: {
+          in: users
         },
-        userId
+        senderId
       },
       data: {
         read: true

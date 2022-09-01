@@ -11,8 +11,8 @@ export class StoreMessageController {
       const { message, otherUser } = request.body
       const doc = await this.storeMessageUseCase.execute({
         message,
-        users: [otherUser, user.id],
-        userId: user.id
+        senderId: user.id,
+        receiverId: otherUser
       })
 
       return response.status(201).send(doc)

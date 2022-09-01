@@ -16,8 +16,7 @@ const users = [
     name: 'User Two',
     email: "user2@test.com",
     password
-  },
-
+  }
 ]
 
 const load = async () => {

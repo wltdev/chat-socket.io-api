@@ -9,8 +9,9 @@ describe('Set All messages as read', () => {
   })
 
   it('should be able to set all messages as read', async () => {
-    const users = ['0f40e224-a10f-492b-ade0-293a8fe24ad2', '0df2e7d7-51c9-430b-827e-ae5af4032be1']
+    const senderId = '0df2e7d7-51c9-430b-827e-ae5af4032be1'
+    const users = ['0f40e224-a10f-492b-ade0-293a8fe24ad2', senderId]
 
-    expect(await setAllMessagesReadUseCase.execute({ users })).toBeUndefined()
+    expect(await setAllMessagesReadUseCase.execute({ users, senderId })).toBeUndefined()
   })
 })
