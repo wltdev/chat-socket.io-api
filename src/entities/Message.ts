@@ -5,8 +5,8 @@ export class Message {
   public senderId: string
   public receiverId: string
   public read?: boolean
-  public createdAt?: string
-  public updatedAt?: string
+  public readonly createdAt?: Date
+  public readonly updatedAt?: Date
 
   constructor(props: Omit<Message, 'id'>) {
     Object.assign(this, props)

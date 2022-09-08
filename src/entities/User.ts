@@ -6,8 +6,8 @@ export class User {
   public name: string
   public email: string
   public password?: string
-  public sentMessages?: Message[]
-  public recievedMessages?: Message[]
+  public readonly sentMessages?: Message[]
+  public readonly recievedMessages?: Message[]
 
   constructor(props: Omit<User, 'id'>) {
     Object.assign(this, props)
