@@ -21,15 +21,15 @@ export class PostgresUsersRepository implements IUsersRepository {
         id: true,
         name: true,
         email: true,
-        messages: {
+        sentMessages: {
           orderBy: {
             createdAt: 'desc'
           },
           take: 1
         },
-        messagesRecieved: {
+        recievedMessages: {
           where: {
-            senderId: userId
+            senderId: userId // users who recieved message from logged user
           },
           orderBy: {
             createdAt: 'desc'
