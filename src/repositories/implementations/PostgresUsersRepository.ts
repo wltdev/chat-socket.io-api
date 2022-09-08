@@ -22,6 +22,9 @@ export class PostgresUsersRepository implements IUsersRepository {
         name: true,
         email: true,
         sentMessages: {
+          where: {
+            receiverId: userId
+          },
           orderBy: {
             createdAt: 'desc'
           },
