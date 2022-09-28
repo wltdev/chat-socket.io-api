@@ -37,12 +37,16 @@ export class PostgresMessageRespository implements IMessagesRepository {
   async getMessages(users: string[]): Promise<Message[]> {
     const docs = await this.prismaClient.message.findMany({
       where: {
-        senderId: {
-          in: users
-        },
-        receiverId: {
-          in: users
-        }
+        OR: [
+          {
+            senderId: users[0],
+            receiverId: users[1]
+          },
+          {
+            senderId: users[1],
+            receiverId: users[0]
+          }
+        ]
       },
       orderBy: {
         createdAt: 'asc'

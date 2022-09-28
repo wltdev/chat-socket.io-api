@@ -21,6 +21,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('send-message', (data) => {
+    console.log(data)
     const sendUserSocket = global.onlineUsers.get(data.receiverId)
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('message-recieve', data)

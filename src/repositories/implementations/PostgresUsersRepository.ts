@@ -21,6 +21,7 @@ export class PostgresUsersRepository implements IUsersRepository {
         id: true,
         name: true,
         email: true,
+        photo: true,
         sentMessages: {
           where: {
             receiverId: userId
